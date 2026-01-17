@@ -171,3 +171,19 @@ label {
 .feedback-btn:hover {
   background: #e2e8f0;
 }
+/* View counter – góc phải trên */
+#viewCounter {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  font-size: 13px;
+  background: #ffffff;
+  padding: 6px 10px;
+  border-radius: 20px;
+  border: 1px solid #d0d7de;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
