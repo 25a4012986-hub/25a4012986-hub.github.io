@@ -242,23 +242,31 @@ function openFeedback() {
     "_blank"
   );
 }
-/* ================= ĐẾM LƯỢT TRUY CẬP ================= */
+/* ================= ĐẾM LƯỢT TRUY CẬP (FIREBASE) ================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetch("https://api.countapi.xyz/hit/25a4012986-hub.github.io/visits")
-    .then(res => {
-      if (!res.ok) throw new Error("API error");
-      return res.json();
-    })
-    .then(data => {
-      const el = document.getElementById("viewCount");
-      if (el && data.value !== undefined) {
-        el.innerText = data.value.toLocaleString("vi-VN");
-      }
-    })
-    .catch(err => {
-      console.warn("View counter error:", err);
-      const el = document.getElementById("viewCount");
-      if (el) el.innerText = "—";
-    });
+// 1️⃣ Import Firebase (CDN – dùng cho web tĩnh)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+// 2️⃣ Cấu hình Firebase (THAY bằng config của bạn)
+const firebaseConfig = {
+  databaseURL: "https://view-counter-9e8b3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+};
+
+// 3️⃣ Khởi tạo
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const viewRef = ref(db, "views");
+
+// 4️⃣ Tăng lượt truy cập (atomic – chống F5 spam)
+runTransaction(viewRef, (current) => {
+  return (current || 0) + 1;
 });
+
+// 5️⃣ Lắng nghe realtime & hiển thị
+onValue(viewRef, (snapshot) => {
+  const count = snapshot.val() || 0;
+  const el = document.getElementById("viewCount");
+  if (el) el.innerText = count.toLocaleString("vi-VN");
+});
+
