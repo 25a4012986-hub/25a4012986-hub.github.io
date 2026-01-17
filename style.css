@@ -1,0 +1,173 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+}
+
+/* Toàn trang */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f4f7;
+  margin: 0;
+  padding: 24px;
+}
+
+/* Khung web */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.desc {
+  text-align: center;
+  color: #555;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+/* Lưu ý */
+.warning {
+  background: #fff3cd;
+  border: 1px solid #ffe08a;
+  color: #b30000;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+.warning a {
+  display: inline-block;
+  margin-top: 6px;
+  color: #b30000;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* Section title */
+h2 {
+  margin-top: 12px;
+  color: #003366;
+}
+
+h3 {
+  margin-top: 10px;
+}
+
+h4 {
+  margin-top: 5px;
+}
+
+/* Cỡ chữ Nội dung tick */
+label {
+  display: block;
+  margin: 6px 0;
+}
+
+.option {
+  position: relative;
+  padding-right: 10px;
+}
+/* Icon (i) */
+.info {
+  position: relative;        /* QUAN TRỌNG */
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: justify;
+  border-radius: 50%;
+  background: #fafafa;
+  color: #1a73e8;
+  font-size: 12px;
+  font-weight: normal;       /* chữ thường */
+  cursor: pointer;
+}
+/* Tooltip */
+.tooltip {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 100%;                /* NGAY SAU ICON */
+  margin-left: 8px;          /* cách icon 1 chút */
+  transform: translateY(-50%);
+  min-width: 450px;
+  max-width: 480px;
+  background: #f8f9fb;
+  border: 1px solid #d0d7de;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #333;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  z-index: 999;
+}
+/* Hover / focus hiện tooltip */
+.info:hover .tooltip,
+.info:focus .tooltip {
+  display: block;
+}
+
+/* Button */
+#submitBtn {
+  display: block;
+  margin: 30px auto 0;
+  padding: 12px 28px;
+  font-size: 16px;
+  background: #013a54;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#submitBtn:hover {
+  background: #004c99;
+}
+
+/* Result */
+.result-box {
+  display: none;
+  margin-top: 25px;
+  padding: 18px;
+  background: #fff3cd;
+  border: 1px solid #ffe08a;
+  border-radius: 8px;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 10px;
+  }
+}
+.feedback-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.feedback-btn:hover {
+  background: #e2e8f0;
+}
