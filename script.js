@@ -244,18 +244,21 @@ function openFeedback() {
 }
 /* ================= ĐẾM LƯỢT TRUY CẬP ================= */
 
-fetch("https://api.countapi.xyz/hit/25a4012986-hub.github.io/visits")
-  .then(res => res.json())
-  .then(data => {
-    const viewEl = document.getElementById("viewCount");
-    if (viewEl) {
-      viewEl.innerText = data.value;
-    }
-  })
-  .catch(() => {
-    const viewEl = document.getElementById("viewCount");
-    if (viewEl) {
-      viewEl.innerText = "—";
-    }
-  });
-
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("https://api.countapi.xyz/hit/25a4012986-hub.github.io/visits")
+    .then(res => {
+      if (!res.ok) throw new Error("API error");
+      return res.json();
+    })
+    .then(data => {
+      const el = document.getElementById("viewCount");
+      if (el && data.value !== undefined) {
+        el.innerText = data.value.toLocaleString("vi-VN");
+      }
+    })
+    .catch(err => {
+      console.warn("View counter error:", err);
+      const el = document.getElementById("viewCount");
+      if (el) el.innerText = "—";
+    });
+});
