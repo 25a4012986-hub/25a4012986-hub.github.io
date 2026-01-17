@@ -242,4 +242,20 @@ function openFeedback() {
     "_blank"
   );
 }
+/* ================= ĐẾM LƯỢT TRUY CẬP ================= */
+
+fetch("https://api.countapi.xyz/hit/25a4012986-hub.github.io/visits")
+  .then(res => res.json())
+  .then(data => {
+    const viewEl = document.getElementById("viewCount");
+    if (viewEl) {
+      viewEl.innerText = data.value;
+    }
+  })
+  .catch(() => {
+    const viewEl = document.getElementById("viewCount");
+    if (viewEl) {
+      viewEl.innerText = "—";
+    }
+  });
 
