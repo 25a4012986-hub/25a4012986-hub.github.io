@@ -1,17 +1,19 @@
-/* Reset */
+/* ================= RESET ================= */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* Toàn trang */
+/* ================= TOÀN TRANG ================= */
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: #f2f4f7;
-  margin: 0;
+  color: #333;
   padding: 24px;
 }
 
-/* Khung web */
+/* ================= KHUNG WEB ================= */
 .container {
   max-width: 900px;
   margin: 0 auto;
@@ -21,13 +23,38 @@ body {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
-/* Header */
+/* ================= TIÊU ĐỀ ================= */
 h1 {
   text-align: center;
+  font-size: 25px;
+  font-weight: 700;
+  color: #013a54;
+  margin-bottom: 10px;
+}
+
+h2 {
   font-size: 20px;
+  font-weight: 600;
+  color: #001529;
+  margin-top: 22px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 16px;
   margin-bottom: 8px;
 }
 
+h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+/* ================= MÔ TẢ ================= */
 .desc {
   text-align: center;
   color: #555;
@@ -35,74 +62,61 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Lưu ý */
+/* ================= LƯU Ý ================= */
 .warning {
   background: #fff3cd;
   border: 1px solid #ffe08a;
-  color: #b30000;
+  color: #7a3b00;
   padding: 14px 18px;
   border-radius: 8px;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.6;
   margin-bottom: 25px;
 }
 
 .warning a {
-  display: inline-block;
-  margin-top: 6px;
   color: #b30000;
   font-weight: 600;
   text-decoration: underline;
 }
 
-/* Section title */
-h2 {
-  margin-top: 12px;
-  color: #003366;
-}
-
-h3 {
-  margin-top: 10px;
-}
-
-h4 {
-  margin-top: 5px;
-}
-
-/* Cỡ chữ Nội dung tick */
+/* ================= LABEL & OPTION ================= */
 label {
   display: block;
   margin: 6px 0;
+  font-size: 14px;
 }
 
 .option {
   position: relative;
   padding-right: 10px;
 }
-/* Icon (i) */
+
+/* ================= ICON INFO ================= */
 .info {
-  position: relative;        /* QUAN TRỌNG */
+  position: relative;
   display: inline-block;
   width: 18px;
   height: 18px;
   line-height: 18px;
-  text-align: justify;
+  text-align: center;
   border-radius: 50%;
-  background: #fafafa;
+  background: #f1f5f9;
   color: #1a73e8;
   font-size: 12px;
-  font-weight: normal;       /* chữ thường */
   cursor: pointer;
+  margin-left: 4px;
 }
-/* Tooltip */
+
+/* ================= TOOLTIP ================= */
 .tooltip {
   display: none;
   position: absolute;
   top: 50%;
-  left: 100%;                /* NGAY SAU ICON */
-  margin-left: 8px;          /* cách icon 1 chút */
+  left: 100%;
+  margin-left: 8px;
   transform: translateY(-50%);
-  min-width: 450px;
+  min-width: 420px;
   max-width: 480px;
   background: #f8f9fb;
   border: 1px solid #d0d7de;
@@ -111,16 +125,16 @@ label {
   font-size: 13px;
   line-height: 1.5;
   color: #333;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
   z-index: 999;
 }
-/* Hover / focus hiện tooltip */
+
 .info:hover .tooltip,
 .info:focus .tooltip {
   display: block;
 }
 
-/* Button */
+/* ================= BUTTON ================= */
 #submitBtn {
   display: block;
   margin: 30px auto 0;
@@ -137,7 +151,7 @@ label {
   background: #004c99;
 }
 
-/* Result */
+/* ================= KẾT QUẢ ================= */
 .result-box {
   display: none;
   margin-top: 25px;
@@ -149,16 +163,7 @@ label {
   text-align: center;
 }
 
-/* Mobile */
-@media (max-width: 600px) {
-  .container {
-    padding: 20px;
-  }
-
-  h1 {
-    font-size: 10px;
-  }
-}
+/* ================= NÚT GÓP Ý ================= */
 .feedback-btn {
   background: #f1f5f9;
   border: 1px solid #cbd5e1;
@@ -170,6 +175,27 @@ label {
 
 .feedback-btn:hover {
   background: #e2e8f0;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 600px) {
+  body {
+    padding: 14px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  h1 { font-size: 20px; }
+  h2 { font-size: 17px; }
+  h3 { font-size: 15px; }
+  h4 { font-size: 14px; }
+
+  .tooltip {
+    min-width: 280px;
+    max-width: 320px;
+  }
 }
 /* View counter – góc phải trên */
 #viewCounter {
@@ -187,3 +213,4 @@ label {
   align-items: center;
   gap: 6px;
 }
+
