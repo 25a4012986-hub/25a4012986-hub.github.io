@@ -73,19 +73,46 @@ if (sectionV > 10) {
 
 total += sectionV;
 
-  /* ===== VI. ĐIỂM CỘNG ===== */
-  const awardPoints = [10, 8, 6, 5, 4, 4, 3, 2, 1];
-  document.querySelectorAll('input[name="award_nckh"]').forEach((el, i) => {
-    if (el.checked) total += awardPoints[i];
-  });
+ /* ===== VI. ĐIỂM CỘNG (MAX 10) ===== */
+let bonus = 0;
 
-  const certPoints = [10, 8, 4, 2];
-  document.querySelectorAll('input[name="certificate"]').forEach((el, i) => {
-    if (el.checked) total += certPoints[i];
-  });
+/* 1️⃣ Giải thưởng NCKH – lấy mức CAO NHẤT */
+let bonusAward = 0;
+const awardPoints = [10, 8, 6, 5, 4, 4, 3, 2, 1];
 
-  if (document.getElementById("sv_khuyet_tat")?.checked) total += 2;
-  if (document.getElementById("vuon_len_hoc_tap")?.checked) total += 2;
+document.querySelectorAll('input[name="award_nckh"]').forEach((el, i) => {
+  if (el.checked) {
+    bonusAward = Math.max(bonusAward, awardPoints[i]);
+  }
+});
+
+/* 2️⃣ Giấy khen – lấy mức CAO NHẤT */
+let bonusCert = 0;
+const certPoints = [10, 8, 4, 2];
+
+document.querySelectorAll('input[name="certificate"]').forEach((el, i) => {
+  if (el.checked) {
+    bonusCert = Math.max(bonusCert, certPoints[i]);
+  }
+});
+
+/* 3️⃣ Trường hợp đặc biệt – cộng dồn */
+let bonusSpecial = 0;
+
+if (document.getElementById("sv_khuyet_tat")?.checked) {
+  bonusSpecial += 2;
+}
+
+if (document.getElementById("vuon_len_hoc_tap")?.checked) {
+  bonusSpecial += 2;
+}
+
+/* 4️⃣ Tổng điểm cộng + ÉP TRẦN */
+bonus = bonusAward + bonusCert + bonusSpecial;
+bonus = Math.min(bonus, 10);
+
+/* Cộng vào tổng */
+total += bonus;
 
   /* ===== VII. ĐIỂM TRỪ ===== */
   let penalty = 0;
