@@ -169,4 +169,3 @@ total += sectionV;
 window.openFeedback = function () {
   window.open("https://forms.gle/tKBiR1BQxvhhBku58", "_blank");
 };
-
