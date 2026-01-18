@@ -1,272 +1,173 @@
-function calculateResult() {
+// ==========================
+// HÀM TÍNH ĐIỂM CHÍNH
+// ==========================
+window.calculateResult = function () {
   let total = 0;
+  let notes = [];
 
-  /* ================= I. HỌC TẬP & NCKH (MAX 20) ================= */
-  let section1 = 0;
-
-  // 1.1 GPA (max 15)
-  const gpaScores = [15, 14, 10, 7, 5];
+  /* ===== I. GPA ===== */
+  const gpaPoints = [15, 14, 10, 7, 5];
   document.querySelectorAll('input[name="gpa"]').forEach((el, i) => {
-    if (el.checked) section1 += gpaScores[i];
+    if (el.checked) total += gpaPoints[i];
   });
 
-  // 1.2 Hoạt động khoa học (MAX 5)
-let science = 0;
+  /* ===== I.2 NCKH ===== */
+  if (document.querySelectorAll('.science-checkbox:checked').length > 0) {
+    total += 5;
+  }
 
-/* 3 hoạt động khoa học (checkbox 5 điểm) */
-document.querySelectorAll('.science-checkbox').forEach(cb => {
-  if (cb.checked) science += 5;
-});
+  /* ===== Seminar ===== */
+  document.querySelectorAll('input[name="seminar"]').forEach((el, i) => {
+    if (el.checked) total += i + 1;
+  });
 
-/* Sinh hoạt khoa học (radio 1–3 điểm) */
-const seminarScores = [1, 2, 3];
-document.querySelectorAll('input[name="seminar"]').forEach((el, i) => {
-  if (el.checked) science += seminarScores[i];
-});
+  /* ===== Tutor ===== */
+  if (document.querySelector('.tutor-checkbox')?.checked) total += 3;
 
-/* Tutor / trợ giảng (+3) */
-if (document.querySelector('.tutor-checkbox')?.checked) {
-  science += 3;
-}
-
-/* Ép trần */
-science = Math.min(science, 5);
-
-/* Cộng vào mục 1 */
-section1 += science;
-total += Math.min(section1, 20);
-  /* ================= II. CHẤP HÀNH QUY CHẾ (MAX 25) ================= */
-  let section2 = 0;
-  const ruleScores = [25, 20, 10, 0];
+  /* ===== II. Quy chế ===== */
+  const rulePoints = [25, 20, 10, 0];
   document.querySelectorAll('input[name="rule"]').forEach((el, i) => {
-    if (el.checked) section2 = ruleScores[i];
+    if (el.checked) total += rulePoints[i];
   });
-  total += section2;
 
-  /* ================= III. HOẠT ĐỘNG HVNH (MAX 20) ================= */
-  let section3 = 0;
-  const activityScores = [10, 15, 20];
+  /* ===== III. Hoạt động HVNH ===== */
+  const activityPoints = [10, 15, 20];
   document.querySelectorAll('input[name="activity"]').forEach((el, i) => {
-    if (el.checked) section3 = activityScores[i];
-  });
-  total += section3;
-
-  /* ================= IV. CÔNG DÂN & CỘNG ĐỒNG (MAX 25) ================= */
-  let section4 = 0;
-
-  const citizenScores = [20, 0];
-  document.querySelectorAll('input[name="citizen"]').forEach((el, i) => {
-    if (el.checked) section4 += citizenScores[i];
+    if (el.checked) total += activityPoints[i];
   });
 
-  const communityScores = [5, 0];
-  document.querySelectorAll('input[name="community"]').forEach((el, i) => {
-    if (el.checked) section4 += communityScores[i];
+  /* ===== IV. Công dân ===== */
+  if (document.querySelector('input[name="citizen"]')?.checked) total += 20;
+  if (document.querySelector('input[name="community"]')?.checked) total += 5;
+
+  /* ===== V. Cán bộ – Đoàn – Hội ===== */
+  const leaderPoints = [10, 8, 0];
+  document.querySelectorAll('input[name="leader"]').forEach((el, i) => {
+    if (el.checked) total += leaderPoints[i];
   });
 
-  total += Math.min(section4, 25);
+  const deputyPoints = [8, 6, 0];
+  document.querySelectorAll('input[name="deputy"]').forEach((el, i) => {
+    if (el.checked) total += deputyPoints[i];
+  });
 
-  /* ================= V. CÁN BỘ – ĐOÀN – HỘI (MAX 10) ================= */
-  let section5 = 0;
+  const memberPoints = [6, 4, 0];
+  document.querySelectorAll('input[name="member"]').forEach((el, i) => {
+    if (el.checked) total += memberPoints[i];
+  });
 
-  const getRadioScore = (name, scores) => {
-    let s = 0;
-    document.querySelectorAll(`input[name="${name}"]`).forEach((el, i) => {
-      if (el.checked) s = scores[i];
-    });
-    return s;
-  };
+  /* ===== VI. ĐIỂM CỘNG ===== */
+  const awardPoints = [10, 8, 6, 5, 4, 4, 3, 2, 1];
+  document.querySelectorAll('input[name="award_nckh"]').forEach((el, i) => {
+    if (el.checked) total += awardPoints[i];
+  });
 
-  section5 = Math.max(
-    getRadioScore("level_khoa", [10]),
-    getRadioScore("leader", [10, 8, 0]),
-    getRadioScore("deputy", [8, 6, 0]),
-    getRadioScore("member", [6, 4, 0])
-  );
+  const certPoints = [10, 8, 4, 2];
+  document.querySelectorAll('input[name="certificate"]').forEach((el, i) => {
+    if (el.checked) total += certPoints[i];
+  });
 
-  total += Math.min(section5, 10);
+  if (document.getElementById("sv_khuyet_tat")?.checked) total += 2;
+  if (document.getElementById("vuon_len_hoc_tap")?.checked) total += 2;
 
-/* ================= VI. ĐIỂM CỘNG (TỐI ĐA 10) ================= */
+  /* ===== VII. ĐIỂM TRỪ ===== */
+  let penalty = 0;
+  document.querySelectorAll('[data-penalty]').forEach(el => {
+    if (!el.checked) return;
+    const map = { vo_le: 5, hv1: 2, hv2: 3, hv3: 4, debt: 4 };
+    penalty += map[el.dataset.penalty] || 0;
+  });
+  total -= penalty;
 
-/* 1️⃣ Giải thưởng NCKH – lấy mức CAO NHẤT */
-let bonusAward = 0;
-const awardScores = [10, 8, 6, 5, 4, 4, 3, 2, 1];
-
-document.querySelectorAll('input[name="award_nckh"]').forEach((el, i) => {
-  if (el.checked) {
-    bonusAward = Math.max(bonusAward, awardScores[i]);
+  /* ===== TRỪ ĐẶC BIỆT ===== */
+  if (document.querySelector('[data-penalty="khien_trach"]')?.checked && total > 80) {
+    total = 80;
+    notes.push("⚠️ Bị kỷ luật khiển trách → điểm tối đa bị khống chế ở mức 80.");
   }
-});
 
-/* 2️⃣ Giấy khen – lấy mức CAO NHẤT */
-let bonusCert = 0;
-const certScores = [10, 8, 4, 2];
-
-document.querySelectorAll('input[name="certificate"]').forEach((el, i) => {
-  if (el.checked) {
-    bonusCert = Math.max(bonusCert, certScores[i]);
+  if (
+    document.querySelector('[data-penalty="canh_cao"]')?.checked ||
+    document.querySelector('[data-penalty="dinh_chi"]')?.checked
+  ) {
+    if (total > 65) {
+      total = 65;
+      notes.push("⚠️ Bị cảnh cáo / đình chỉ → điểm tối đa bị khống chế ở mức 65.");
+    }
   }
-});
 
-/* 3️⃣ Trường hợp đặc biệt (cộng dồn) */
-let bonusSpecial = 0;
+  /* ===== GIỚI HẠN ===== */
+  total = Math.max(0, Math.min(100, total));
 
-if (document.getElementById("sv_khuyet_tat")?.checked) {
-  bonusSpecial += 2;
-}
+  /* ===== XẾP LOẠI ===== */
+  const rank =
+    total >= 90 ? "Xuất sắc" :
+    total >= 80 ? "Tốt" :
+    total >= 65 ? "Khá" :
+    total >= 50 ? "Trung bình" : "Yếu";
 
-if (document.getElementById("vuon_len_hoc_tap")?.checked) {
-  bonusSpecial += 2;
-}
+  /* ===== GHI CHÚ THEO XẾP LOẠI ===== */
+  let rankNote = "";
 
-/* 4️⃣ Tổng điểm cộng (ÉP TRẦN = 10) */
-let bonus = bonusAward + bonusCert + bonusSpecial;
-bonus = Math.min(bonus, 10);
-
-/* ================= VII. ĐIỂM TRỪ ================= */
-let penaltyFixed = 0;
-
-const penalties = document.querySelectorAll('input[data-penalty]');
-
-penalties.forEach(cb => {
-  if (!cb.checked) return;
-
-  switch (cb.dataset.penalty) {
-    case "vo_le":
-      penaltyFixed += 5;
-      break;
-    case "hv1":
-      penaltyFixed += 2;
-      break;
-    case "hv2":
-      penaltyFixed += 3;
-      break;
-    case "hv3":
-      penaltyFixed += 4;
-      break;
-    case "debt":
-      penaltyFixed += 4;
-      break;
+  if (rank === "Xuất sắc") {
+    rankNote = `
+      <ul>
+        <li>Đủ điều kiện xét <b>Học bổng Khuyến khích học tập loại Xuất sắc</b> (nếu GPA phù hợp).</li>
+        <li>Có thể được Học viện xem xét biểu dương, khen thưởng đặc biệt</li>
+        <li>Được ưu tiên trong xét các hỗ trợ, dịch vụ và cơ hội học thuật.</li>
+      </ul>
+    `;
+  } else if (rank === "Tốt") {
+    rankNote = `
+      <ul>
+        <li>Đủ điều kiện xét <b>Học bổng Khuyến khích học tập loại Khá, Giỏi</b> (tùy GPA)</li>
+        <li>Là tiêu chí ưu tiên khi xét khen thưởng nếu GPA bằng nhau.</li>
+<li>Đủ điều kiện tham gia hầu hết các chương trình học bổng, tài trợ.</li>
+      </ul>
+    `;
+  } else if (rank === "Khá") {
+    rankNote = `
+      <ul>
+        <li>Đủ điều kiện xét <b>Học bổng Khuyến khích học tập loại Khá</b>.</li>
+        <li>Đáp ứng yêu cầu xét tốt nghiệp và các quyền lợi học vụ cơ bản.</li>
+      </ul>
+    `;
+  } else if (rank === "Trung bình") {
+    rankNote = `
+      <ul>
+        <li>Kết quả rèn luyện vẫn được ghi nhận và là căn cứ xét tốt nghiệp.</li>
+        <li>Chưa đủ điều kiện xét học bổng và khen thưởng. Nên cải thiện điểm rèn luyện ở các học kỳ tiếp theo để mở rộng cơ hội.</li>
+      </ul>
+    `;
+  } else {
+    rankNote = `
+      <ul>
+        <li>Nếu xếp loại <b>Yếu</b> trong 2 học kỳ liên tiếp có thể bị tạm ngừng học.</li>
+        <li>Nên chủ động cải thiện kết quả rèn luyện ở học kỳ tiếp theo.</li>
+      </ul>
+    `;
   }
-});
 
-/* ================= TỔNG TRƯỚC ÉP ================= */
-let finalScore = total + bonus - penaltyFixed;
+  /* ===== HIỂN THỊ ===== */
+  document.getElementById("totalScore").innerText = total;
+  document.getElementById("rank").innerText = rank;
+  document.getElementById("resultBox").style.display = "block";
 
-/* Ép ngưỡng kỷ luật */
-if (document.querySelector('[data-penalty="khien_trach"]')?.checked && finalScore > 80) {
-  finalScore = 80;
-}
+  const noteBox = document.getElementById("noteBox");
+  const noteContent = document.getElementById("noteContent");
 
-if (
-  (document.querySelector('[data-penalty="canh_cao"]')?.checked ||
-   document.querySelector('[data-penalty="dinh_chi"]')?.checked) &&
-  finalScore > 65
-) {
-  finalScore = 65;
-}
+  let finalNoteHTML = `<p><b>Điểm rèn luyện của bạn:</b></p>${rankNote}`;
 
-/* Giới hạn */
-finalScore = Math.max(0, Math.min(finalScore, 100));
-;
+  if (notes.length > 0) {
+    finalNoteHTML += `<hr><p><b>Lưu ý bổ sung:</b></p>` + notes.map(n => `<p>${n}</p>`).join("");
+  }
 
-let rank = "";
-if (finalScore >= 90) rank = "Xuất sắc";
-else if (finalScore >= 80) rank = "Tốt";
-else if (finalScore >= 65) rank = "Khá";
-else if (finalScore >= 50) rank = "Trung bình";
-else rank = "Yếu";
-/* ================= HIỂN THỊ ================= */ document.getElementById("totalScore").innerText = finalScore; document.getElementById("rank").innerText = rank; document.getElementById("resultBox").style.display = "block"; 
-/* ================= GHI CHÚ ================= */
-const noteBox = document.getElementById("noteBox");
-const noteContent = document.getElementById("noteContent");
-
-let noteHTML = "";
-
-if (rank === "Xuất sắc") {
-  noteHTML = `
-    <p><b>Kết quả rèn luyện của bạn:</b></p>
-    <ul>
-      <li>Đủ điều kiện xét <b>Học bổng Khuyến khích học tập loại Xuất sắc</b> (nếu GPA tương ứng).</li>
-      <li>Có lợi thế cao khi xét học bổng, khen thưởng, biểu dương.</li>
-      <li>Được ưu tiên trong xét các hỗ trợ, dịch vụ và cơ hội học thuật.</li>
-      <li>Có thể được Học viện xem xét <b>biểu dương, khen thưởng đặc biệt</b>.</li>
-    </ul>
-  `;
-} 
-else if (rank === "Tốt") {
-  noteHTML = `
-    <p><b>Kết quả rèn luyện của bạn:</b></p>
-    <ul>
-      <li>Đủ điều kiện xét <b>Học bổng Khuyến khích học tập loại Khá, Giỏi</b> (tùy GPA).</li>
-      <li>Là tiêu chí ưu tiên khi xét học bổng, khen thưởng nếu GPA bằng nhau.</li>
-      <li>Đủ điều kiện tham gia hầu hết các chương trình học bổng, tài trợ.</li>
-    </ul>
-  `;
-} 
-else if (rank === "Khá") {
-  noteHTML = `
-    <p><b>Kết quả rèn luyện của bạn:</b></p>
-    <ul>
-      <li>Đủ điều kiện xét <b>Học bổng Khuyến khích học tập loại Khá</b> (nếu GPA phù hợp).</li>
-      <li>Kết quả rèn luyện được ghi nhận đầy đủ trong hồ sơ sinh viên.</li>
-      <li>Đáp ứng yêu cầu xét tốt nghiệp và các quyền lợi học vụ cơ bản.</li>
-    </ul>
-  `;
-} 
-else if (rank === "Trung bình") {
-  noteHTML = `
-    <p><b>Kết quả rèn luyện của bạn:</b></p>
-    <ul>
-      <li>Kết quả rèn luyện vẫn được ghi nhận và là căn cứ xét tốt nghiệp.</li>
-      <li>Chưa đủ điều kiện để xét học bổng và khen thưởng.</li>
-      <li>Nên cải thiện điểm rèn luyện ở các học kỳ tiếp theo để mở rộng cơ hội.</li>
-    </ul>
-  `;
-} 
-else {
-  noteHTML = `
-    <p><b>Lưu ý về kết quả rèn luyện:</b></p>
-    <ul>
-      <li>Nếu xếp loại <b>Yếu/Kém</b> trong hai học kỳ liên tiếp, sinh viên có thể bị tạm ngừng học.</li>
-      <li>Nên chủ động cải thiện kết quả rèn luyện ở học kỳ tiếp theo.</li>
-    </ul>
-  `;
-}
-noteContent.innerHTML = noteHTML;
-noteBox.style.display = "block";}
-
-function openFeedback() {
-  window.open(
-    "https://forms.gle/tKBiR1BQxvhhBku58", 
-    "_blank"
-  );
-}
-/* ================= ĐẾM LƯỢT TRUY CẬP (FIREBASE) ================= */
-
-// 1️⃣ Import Firebase (CDN – dùng cho web tĩnh)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-// 2️⃣ Cấu hình Firebase (THAY bằng config của bạn)
-const firebaseConfig = {
-  databaseURL: "https://view-counter-9e8b3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+  noteContent.innerHTML = finalNoteHTML;
+  noteBox.style.display = "block";
 };
 
-// 3️⃣ Khởi tạo
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const viewRef = ref(db, "views");
-
-// 4️⃣ Tăng lượt truy cập (atomic – chống F5 spam)
-runTransaction(viewRef, (current) => {
-  return (current || 0) + 1;
-});
-
-// 5️⃣ Lắng nghe realtime & hiển thị
-onValue(viewRef, (snapshot) => {
-  const count = snapshot.val() || 0;
-  const el = document.getElementById("viewCount");
-  if (el) el.innerText = count.toLocaleString("vi-VN");
-});
-
+// ==========================
+// NÚT FEEDBACK
+// ==========================
+window.openFeedback = function () {
+  window.open("https://forms.gle/tKBiR1BQxvhhBku58", "_blank");
+};
