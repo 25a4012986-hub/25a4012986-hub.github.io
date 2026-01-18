@@ -5,24 +5,43 @@ window.calculateResult = function () {
   let total = 0;
   let notes = [];
 
-  /* ===== I. GPA ===== */
-  const gpaPoints = [15, 14, 10, 7, 5];
-  document.querySelectorAll('input[name="gpa"]').forEach((el, i) => {
-    if (el.checked) total += gpaPoints[i];
-  });
+ /* ================= I. Ý thức học tập & NCKH (MAX 20) ================= */
+let section1 = 0;
 
-  /* ===== I.2 NCKH ===== */
-  if (document.querySelectorAll('.science-checkbox:checked').length > 0) {
-    total += 5;
-  }
+/* ===== I.1 GPA (MAX 15) ===== */
+const gpaPoints = [15, 14, 10, 7, 5];
+document.querySelectorAll('input[name="gpa"]').forEach((el, i) => {
+  if (el.checked) section1 += gpaPoints[i];
+});
 
-  /* ===== Seminar ===== */
-  document.querySelectorAll('input[name="seminar"]').forEach((el, i) => {
-    if (el.checked) total += i + 1;
-  });
+/* ===== I.2 Hoạt động khoa học (MAX 5) ===== */
+let science = 0;
 
-  /* ===== Tutor ===== */
-  if (document.querySelector('.tutor-checkbox')?.checked) total += 3;
+/* NCKH / cuộc thi học thuật */
+if (document.querySelector('.science-checkbox:checked')) {
+  science += 5;
+}
+
+/* Sinh hoạt khoa học */
+const seminarScores = [1, 2, 3];
+document.querySelectorAll('input[name="seminar"]').forEach((el, i) => {
+  if (el.checked) science += seminarScores[i];
+});
+
+/* Tutor / trợ giảng */
+if (document.querySelector('.tutor-checkbox')?.checked) {
+  science += 3;
+}
+
+/* ÉP TRẦN MỤC 1.2 */
+science = Math.min(science, 5);
+
+/* CỘNG VÀO MỤC I + ÉP TRẦN MỤC I */
+section1 += science;
+section1 = Math.min(section1, 20);
+
+/* CỘNG VÀO TỔNG */
+total += section1;
 
   /* ===== II. Quy chế ===== */
   const rulePoints = [25, 20, 10, 0];
