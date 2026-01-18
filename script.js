@@ -40,21 +40,19 @@ window.calculateResult = function () {
   if (document.querySelector('input[name="citizen"]')?.checked) total += 20;
   if (document.querySelector('input[name="community"]')?.checked) total += 5;
 
-  /* ===== V. Cán bộ – Đoàn – Hội ===== */
-  const leaderPoints = [10, 8, 0];
-  document.querySelectorAll('input[name="leader"]').forEach((el, i) => {
-    if (el.checked) total += leaderPoints[i];
-  });
+  /* ===== V. Cán bộ – Đoàn – Hội (CHECKBOX + TRẦN 10) ===== */
+let sectionV = 0;
 
-  const deputyPoints = [8, 6, 0];
-  document.querySelectorAll('input[name="deputy"]').forEach((el, i) => {
-    if (el.checked) total += deputyPoints[i];
-  });
+document.querySelectorAll('.role-v:checked').forEach(el => {
+  sectionV += Number(el.dataset.point || 0);
+});
 
-  const memberPoints = [6, 4, 0];
-  document.querySelectorAll('input[name="member"]').forEach((el, i) => {
-    if (el.checked) total += memberPoints[i];
-  });
+if (sectionV > 10) {
+  sectionV = 10;
+  notes.push("Phần V (Cán bộ – Đoàn – Hội) được tính tối đa 10 điểm dù có kiêm nhiệm nhiều vị trí.");
+}
+
+total += sectionV;
 
   /* ===== VI. ĐIỂM CỘNG ===== */
   const awardPoints = [10, 8, 6, 5, 4, 4, 3, 2, 1];
@@ -171,3 +169,4 @@ window.calculateResult = function () {
 window.openFeedback = function () {
   window.open("https://forms.gle/tKBiR1BQxvhhBku58", "_blank");
 };
+
